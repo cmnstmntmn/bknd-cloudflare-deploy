@@ -1,19 +1,23 @@
 {
-   "name": "bknd-cloudflare-deploy",
-   "version": "0.0.0",
-   "private": true,
-   "scripts": {
-      "deploy": "wrangler deploy",
-      "dev": "wrangler dev",
-      "typegen": "wrangler types",
-      "postinstall": "wrangler types"
-   },
-   "dependencies": {
-      "bknd": "0.19.0"
-   },
-   "devDependencies": {
-      "@cloudflare/workers-types": "^4.20251126.0",
-      "typescript": "^5.9.3",
-      "wrangler": "^4.51.0"
-   }
+  "name": "bknd-cloudflare-deploy",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "bknd": "PROXY=1 bunx tsx node_modules/.bin/bknd",
+    "bknd:typegen": "bun run bknd types",
+    "bknd:sync": "bun run bknd -- sync --force",
+    "bknd:setup": "bun run bknd:typegen && bun run bknd:sync",
+    "deploy": "wrangler deploy",
+    "dev": "bun run bknd:setup && wrangler dev",
+    "typegen": "wrangler types",
+    "postinstall": "wrangler types"
+  },
+  "dependencies": {
+    "bknd": "0.19.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20251126.0",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.51.0"
+  }
 }
